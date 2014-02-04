@@ -1,6 +1,7 @@
 import urllib2
 import re
 from bs4 import BeautifulSoup
+import urlparse
 
 
 # keys to search
@@ -20,6 +21,10 @@ url_list = [line.strip() for line in open('sites.txt')]
 
 # links that match a key
 matching_links = list()
+soups = list()
+
+# output results header
+print("RESULTS")
 
 # for each site...
 for url in url_list:
@@ -27,7 +32,6 @@ for url in url_list:
 	# get page's html
 	page = urllib2.urlopen(url).read()
 	soup = BeautifulSoup(page)
-
 	raw_links = list()
 
 	# add all <a> tags, and convert contents to lowercase
@@ -38,14 +42,18 @@ for url in url_list:
 	for link in raw_links:
 		for key in keys:
 			if key in str(link).lower():
-				matching_links.append(link)
+				output = link.get_text();
+				output += ': '
+				output +=urlparse.urljoin(url, str(link.get('href')))
+				matching_links.append(output)
+				
 
+'''
 	for link in raw_links:
 		print link;
+'''
 
-# output results
-print("RESULTS")
+
 
 for link in matching_links:
-	s = link.get_text() + ': ' + str(link.get('href'));
-	print s
+	print ' '.join(link.split())
