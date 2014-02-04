@@ -13,6 +13,7 @@ raw_keys = [line.strip() for line in open('keys.txt')]
 for key in raw_keys:
 	keys.append(key.lower())
 
+print("SEARCHING FOR:")
 for key in keys:
 	print key;
 
@@ -24,7 +25,7 @@ matching_links = list()
 soups = list()
 
 # output results header
-print("RESULTS")
+print("\nRESULTS")
 
 # for each site...
 for url in url_list:
@@ -44,16 +45,21 @@ for url in url_list:
 			if key in str(link).lower():
 				output = link.get_text();
 				output += ': '
-				output +=urlparse.urljoin(url, str(link.get('href')))
-				matching_links.append(output)
+				full_link =urlparse.urljoin(url, str(link.get('href')))
+				output += full_link
+				output = ' '.join(output.split())
+				print output
+				matching_links.append(full_link)
 				
-
-'''
-	for link in raw_links:
-		print link;
-'''
-
-
+# save found matches in text file
+found = open('found_stories.txt','w')
 
 for link in matching_links:
-	print ' '.join(link.split())
+	found.write((link + '\n').encode('utf-8'))
+
+found.close()
+
+
+
+#for link in matching_links:
+#	print ' '.join(link.split())
