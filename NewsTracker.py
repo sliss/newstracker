@@ -51,16 +51,19 @@ def get_Links():
 
 		# search each raw link for key, and add matches to matching_links
 		for link in raw_links:
-			for key in keys:
-				if key in str(link).lower():
-					full_link = urlparse.urljoin(url, str(link.get('href')))
+			match = 1 #start w/ assumption that link is a match
+			for key in keys: # test each key; if it doesn't appear, set match to 0
+				if not key in str(link).lower():
+					match = 0
+			if match == 1:
+				full_link = urlparse.urljoin(url, str(link.get('href')))
 					
-					formatted_headline = ' '.join(link.get_text().split())
-					if not formatted_headline: # blank headline
-						formatted_headline = '<image link>'
-						
-					results.add(Result(formatted_headline,full_link))
-					matching_links.add(full_link)
+				formatted_headline = ' '.join(link.get_text().split())
+				if not formatted_headline: # blank headline
+					formatted_headline = '<image link>'
+					
+				results.add(Result(formatted_headline,full_link))
+				matching_links.add(full_link)		
 		#except:
 		#	print 'could not load page'
 			
