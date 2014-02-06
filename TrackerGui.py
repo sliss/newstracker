@@ -60,8 +60,15 @@ class MyDialog(wx.Dialog):
 			self.tc2.Clear()
 
     def OnRemove(self, event):
+		clipdata = wxTextDataObject()
+		clipdata.SetText("Hi folks!")
+		wxTheClipboard.Open()
+		wxTheClipboard.SetData(clipdata)
+		wxTheClipboard.Close()
+		'''
         index = self.lc.GetFocusedItem()
         self.lc.DeleteItem(index)
+        '''
 
     def OnClose(self, event):
         self.Close()
