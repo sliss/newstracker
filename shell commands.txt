@@ -1,7 +1,0 @@
-mv /home/steveadmin/public/stevenliss.com/public/latest.tar.gz /home/steveadmin/public/stevenliss.com/public/wordpress-`date "+%Y-%m-%d"`.tar.gz
-
-cp -R /home/steveadmin/public/stevenliss.com/src/wordpress/* /home/steveadmin/public/stevenliss.com/public
-
-rm -rf /home/steveadmin/public/stevenliss.com/src/wordpress
-
-grant all on wordpressDB.* to 'wordpressDBUser' identified by 'white3098';
